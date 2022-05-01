@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bottom_background">
+
+    <View
+        android:id="@+id/rectangle"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_baseAsset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginStart="16dp"
+
+        android:text="BTC"
+        android:textSize="25sp"
+        android:textStyle="bold"
+
+        app:layout_constraintBottom_toTopOf="@+id/guideline2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+         />
+
+    <TextView
+        android:id="@+id/tv_quoteAsset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="/INR"
+        android:textSize="18sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tv_baseAsset"
+        app:layout_constraintStart_toEndOf="@+id/tv_baseAsset" />
+
+    <TextView
+        android:id="@+id/tv_lastPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:text="3204897.0"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tv_baseAsset"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_lastPrice_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Last Price"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toTopOf="@+id/tv_lastPrice"
+        app:layout_constraintEnd_toEndOf="@+id/tv_lastPrice"
+
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Time : 2:40pm"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="@+id/tv_lastPrice"
+
+        app:layout_constraintTop_toBottomOf="@+id/tv_lastPrice" />
+
+
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.35" />
+
+    <TextView
+        android:id="@+id/tv_openPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Open Price : 3126901"
+        android:textSize="20sp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline2" />
+
+    <TextView
+        android:id="@+id/tv_lowPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Low Price : 3050000.0"
+
+        android:textSize="20sp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_openPrice" />
+
+    <TextView
+        android:id="@+id/tv_highPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="High Price : 3157364.0"
+        android:textSize="20sp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_lowPrice" />
+
+    <TextView
+        android:id="@+id/tv_volume"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Volume : 128.05752"
+        android:textSize="20sp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_highPrice" />
+
+    <TextView
+        android:id="@+id/tv_bidPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Bid Price : 3103763.0"
+        android:textSize="20sp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_volume" />
+
+    <TextView
+        android:id="@+id/tv_askPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ask Price : 3106853.0"
+        android:textSize="20sp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_bidPrice" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

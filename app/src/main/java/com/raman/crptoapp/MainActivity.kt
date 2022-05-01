@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -47,7 +48,19 @@ class MainActivity : AppCompatActivity() {
             listofData = it as MutableList<CyptoListItem>
 
             recyclerView.layoutManager = LinearLayoutManager(this)
-            recyclerView.adapter = CustomAdapter(listofData!!,viewModel )
+            recyclerView.adapter = CustomAdapter(listofData!!,viewModel , supportFragmentManager)
+
+            //referesh data after 2 sec
+            countDownTimer2 = object : CountDownTimer((2*1000).toLong(), 1000) {
+                override fun onTick(millisUntilFinished: Long) {
+                }
+                override fun onFinish() {
+                    GlobalScope.launch(Dispatchers.IO) {
+                        viewModel.refereshCyptoList()
+                    }
+                    againFinish()
+                }
+            }.start()
         }
 
         var swipeRefreshLayout = findViewById<RecyclerView>(R.id.swiperefresh) as SwipeRefreshLayout
@@ -66,16 +79,8 @@ class MainActivity : AppCompatActivity() {
             recyclerView.adapter!!.notifyDataSetChanged()
         }
 
-        countDownTimer2 = object : CountDownTimer((2*1000).toLong(), 1000) {
-            override fun onTick(millisUntilFinished: Long) {
-            }
-            override fun onFinish() {
-                GlobalScope.launch(Dispatchers.IO) {
-                    viewModel.refereshCyptoList()
-                }
-                againFinish()
-            }
-        }.start()
+
+
 
     }
 
@@ -83,7 +88,11 @@ class MainActivity : AppCompatActivity() {
         countDownTimer2?.start()
     }
 
-    class CustomAdapter(private val dataSet: List<CyptoListItem>, private val viewModelthis: MainActivityViewModel) :
+    class CustomAdapter(
+        private val dataSet: List<CyptoListItem>,
+        private val viewModelthis: MainActivityViewModel,
+        private val supportFragmentManager: FragmentManager
+    ) :
         RecyclerView.Adapter<CustomAdapter.ViewHolder>() {
 
         /**
@@ -134,12 +143,13 @@ class MainActivity : AppCompatActivity() {
             try {
                 val sdf = SimpleDateFormat("dd MMMM yyyy, HH:mm:ss")
                 val netDate = Date(parseLong(dataSet.get(position).at.toString()))
-//                sdf.format(netDate)
                 viewHolder.tv_time.text = "At : "  + sdf.format(netDate)
             } catch (e: Exception) {
             }
-//            viewHolder.tv_time.text = "At : " + dataSet.get(position).at.toString()
-//            viewHolder.tv_time.visibility = View.GONE
+            viewHolder.itemView.setOnClickListener{
+                val bottomSheet = CryptoItemBottomSheet(viewModelthis ,dataSet.get(position).symbol )
+                bottomSheet.show(supportFragmentManager, "")
+            }
         }
 
         // Return the size of your dataset (invoked by the layout manager)

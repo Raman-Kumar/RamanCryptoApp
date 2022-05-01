@@ -16,6 +16,8 @@ class MainActivityViewModel : ViewModel() {
     private var data = MutableLiveData<List<CyptoListItem>>()
     private var newdata = MutableLiveData<List<CyptoListItem>>()
 
+    private var cryptoItemData = MutableLiveData<CyptoListItem>()
+    private var symbolFor: String? = null
 
     init {
         retroService = RetroInstance.getRetroInstance().create(RetroService::class.java)
@@ -24,6 +26,7 @@ class MainActivityViewModel : ViewModel() {
 
     fun observeData() = data
     fun observeNewData() = newdata
+    fun observeCryptoItemData() = cryptoItemData
 
     suspend fun fetchCyptoList() {
         viewModelScope.launch(Dispatchers.IO + coroutineExceptionHandlerData) {
@@ -41,6 +44,16 @@ class MainActivityViewModel : ViewModel() {
         }
     }
 
+    suspend fun getCyptoItemList(symbol : String) {
+        symbolFor = symbol
+        viewModelScope.launch(Dispatchers.IO  + coroutineItemExceptionHandlerData) {
+            val response = retroService.getCyptoListItem(symbol)
+            Log.d("abcde", " " + response.toString())
+            if (response.symbol.equals(symbol))
+            cryptoItemData.postValue(response)
+        }
+    }
+
     val coroutineExceptionHandlerNextData = CoroutineExceptionHandler{_, throwable ->
         throwable.printStackTrace()
         GlobalScope.launch(Dispatchers.IO) {
@@ -53,5 +66,9 @@ class MainActivityViewModel : ViewModel() {
         GlobalScope.launch(Dispatchers.IO) {
             fetchCyptoList()
         }
+    }
+
+    val coroutineItemExceptionHandlerData = CoroutineExceptionHandler{_, throwable ->
+        throwable.printStackTrace()
     }
 }
